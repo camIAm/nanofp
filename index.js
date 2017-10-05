@@ -115,6 +115,13 @@ export const path = curry(function(keys, obj) {
   verify(type(obj), 'Object', 'path')
   return reduce((o, p) => o[p], obj, keys)
 })
+export const pathOr = _curry(function(d, keys, obj) {
+  return defaultTo(d, path(keys, obj));
+});
+
+export const defaultTo = _curry(function(d,v){
+  return v == null || v !== v ? d : v;
+})
 
 export const pluck = curry(function(key, list) {
   verify(type(key), 'String', 'pluck')
@@ -174,6 +181,7 @@ export const assoc = function(k, v, obj) {
 
   return merge(obj, { [k]: v })
 }
+
 // export const lens = curry((getter, setter) => {
 //   return toFunctorFn => {
 //     return target => {
